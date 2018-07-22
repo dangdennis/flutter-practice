@@ -1,6 +1,6 @@
-# myapp
+# Flutter projects
 
-A new Flutter project.
+Placing all flutter prototypes here
 
 ## Getting Started
 
