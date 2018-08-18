@@ -20,6 +20,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   // TODO: Add text editing controllers (101)
   @override
   Widget build(BuildContext context) {
@@ -39,17 +42,33 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 120.0),
             TextField(
                 decoration:
-                    InputDecoration(filled: true, labelText: 'Username')),
+                    InputDecoration(filled: true, labelText: 'Username'),
+                controller: _usernameController),
             SizedBox(height: 12.0),
             TextField(
                 decoration:
                     InputDecoration(filled: true, labelText: 'Password'),
-                obscureText: true)
-            // TODO: Wrap Username with PrimaryColorOverride (103)
-            // TODO: Remove filled: true values (103)
-            // TODO: Wrap Password with PrimaryColorOverride (103)
-            // TODO: Add TextField widgets (101)
-            // TODO: Add button bar (101)
+                obscureText: true,
+                controller: _passwordController),
+            SizedBox(height: 12.0),
+            ButtonBar(
+              // TODO: Add a beveled rectangular border to CANCEL (103)
+              children: <Widget>[
+                // TODO: Add buttons (101)
+                FlatButton(
+                  child: Text("Cancel"),
+                  onPressed: () {
+                    _usernameController.clear();
+                    _passwordController.clear();
+                  },
+                ),
+                RaisedButton(
+                    child: Text("Next"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
+            ),
           ],
         ),
       ),
