@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 
 import 'model/data.dart';
 import 'model/product.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   // TODO: Make a collection of cards (102)
@@ -26,43 +27,44 @@ class HomePage extends StatelessWidget {
     // TODO: Return an AsymmetricView (104)
     // TODO: Pass Category variable to AsymmetricView (104)
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.menu, semanticLabel: 'menu'),
-            onPressed: () {
-              print("Menu button");
-            }),
-        title: Text("Shrine"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              semanticLabel: 'search',
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.menu, semanticLabel: 'menu'),
+              onPressed: () {
+                print("Menu button");
+              }),
+          title: Text("Shrine"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                semanticLabel: 'search',
+              ),
+              onPressed: () {
+                print('Search button');
+              },
             ),
-            onPressed: () {
-              print('Search button');
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.tune,
-              semanticLabel: 'filter',
+            IconButton(
+              icon: Icon(
+                Icons.tune,
+                semanticLabel: 'filter',
+              ),
+              onPressed: () {
+                print('Filter button');
+              },
             ),
-            onPressed: () {
-              print('Filter button');
-            },
-          ),
-        ],
-      ),
-      // TODO: Add app bar (102)
-      // TODO: Add a grid view (102)
-      body: GridView.count(
-          crossAxisCount: 2,
-          padding: EdgeInsets.all(16.0),
-          childAspectRatio: 8.0 / 9.0,
-          children: _buildGridCards(context) // Changed code
-          ),
-    );
+          ],
+        ),
+        // TODO: Add app bar (102)
+        // TODO: Add a grid view (102)
+        body: AsymmetricView(products: getProducts(Category.all))
+        // body: GridView.count(
+        //     crossAxisCount: 2,
+        //     padding: EdgeInsets.all(16.0),
+        //     childAspectRatio: 8.0 / 9.0,
+        //     children: _buildGridCards(context) // Changed code
+        //     ),
+        );
   }
 
   List<Card> _buildGridCards(BuildContext context) {
@@ -79,6 +81,7 @@ class HomePage extends StatelessWidget {
     return products.map((product) {
       return Card(
         // TODO: Adjust card heights (103)
+        elevation: 0.0,
         child: Column(
           // TODO: Center items on the card (103)
           crossAxisAlignment: CrossAxisAlignment.center,
