@@ -20,8 +20,11 @@ import 'model/product.dart';
 import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
-  // TODO: Make a collection of cards (102)
   // TODO: Add a variable for Category (104)
+  final Category category;
+
+  const HomePage({this.category: Category.all});
+
   @override
   Widget build(BuildContext context) {
     // TODO: Return an AsymmetricView (104)
@@ -55,9 +58,7 @@ class HomePage extends StatelessWidget {
 //            ),
 //          ],
 //        ),
-        // TODO: Add app bar (102)
-        // TODO: Add a grid view (102)
-        body: AsymmetricView(products: getProducts(Category.all))
+        body: AsymmetricView(products: getProducts(category))
         // body: GridView.count(
         //     crossAxisCount: 2,
         //     padding: EdgeInsets.all(16.0),

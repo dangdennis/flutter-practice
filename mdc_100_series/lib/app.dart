@@ -20,27 +20,13 @@ import 'login.dart';
 import 'supplemental/cut_corners_border.dart';
 import 'backdrop.dart';
 import 'model/product.dart';
+import 'category_menu_page.dart';
 
 // TODO: Convert ShrineApp to stateful widget (104)
-class ShrineApp extends StatelessWidget {
+class ShrineApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shrine',
-      // TODO: Change home: to a Backdrop with a HomePage frontLayer (104)
-      home: Backdrop(
-          currentCategory: Category.all,
-          frontLayer: HomePage(),
-          backLayer: Container(color: kShrinePink100),
-          frontTitle: Text('Shrine'),
-          backTitle: Text('Menu')),
-      // TODO: Make currentCategory field take _currentCategory (104)
-      // TODO: Pass _currentCategory for frontLayer (104)
-      // TODO: Change backLayer field value to CategoryMenuPage (104)
-      initialRoute: '/login',
-      onGenerateRoute: _getRoute,
-      theme: _kShrineTheme,
-    );
+  _ShrineAppState createState() {
+    return new _ShrineAppState();
   }
 
   Route<dynamic> _getRoute(RouteSettings settings) {
@@ -52,6 +38,41 @@ class ShrineApp extends StatelessWidget {
       settings: settings,
       builder: (BuildContext context) => LoginPage(),
       fullscreenDialog: true,
+    );
+  }
+}
+
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Shrine',
+      // TODO: Change home: to a Backdrop with a HomePage frontLayer (104)
+      home: Backdrop(
+          currentCategory: Category.all,
+          frontLayer: HomePage(
+            category: _currentCategory,
+          ),
+          backLayer: CategoryMenuPage(
+            currentCategory: _currentCategory,
+            onCategoryTap: _onCategoryTap,
+          ),
+          frontTitle: Text('Shrine'),
+          backTitle: Text('Menu')),
+      // TODO: Make currentCategory field take _currentCategory (104)
+      // TODO: Pass _currentCategory for frontLayer (104)
+      // TODO: Change backLayer field value to CategoryMenuPage (104)
+      initialRoute: '/login',
+      onGenerateRoute: widget._getRoute,
+      theme: _kShrineTheme,
     );
   }
 }
