@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
+import '../blocs/stories_provider.dart';
+import '../widgets/news_list_tile.dart';
 
 class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = StoriesProvider.of(context);
+    // Todo: temporary
+    bloc.fetchTopIds();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Top News"),
       ),
-      body: buildList(),
+      body: buildList(bloc),
     );
   }
 
-  Widget buildList() {
-    return ListView.builder(
-      itemCount: 1000,
-      itemBuilder: (BuildContext context, int index) {
-        return FutureBuilder(
-          future: getFuture(),
-          builder: (BuildContext context, snapshop) {
-            return snapshop.hasData
-              ? Text("i'm visibile $index")
-              : Text("Fetch in progress");
-          },
-        );
-      },
-    );
-  }
+  Widget buildList(StoriesBloc bloc) {
+    return StreamBuilder(
+        stream: bloc.topIds,
+        builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-  getFuture() {
-    return Future.delayed(
-      Duration(seconds: 2),
-      () => 'hi',
-    );
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return NewsListTile(itemId: snapshot.data[index]);
+            },
+          );
+        });
   }
 }
