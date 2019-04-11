@@ -16,7 +16,7 @@ class NewsDbProvider implements Source, Cache {
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, "items.db");
-    db = await openDatabase(path, version: 1,
+    db = await openDatabase(path, version: 0,
         onCreate: (Database newDb, int version) {
       newDb.execute("""
         CREATE TABLE Items
